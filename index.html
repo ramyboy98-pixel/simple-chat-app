@@ -1,11 +1,31 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <title>مراسلة الأصدقاء</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>مراسلة الأصدقاء</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <h1>تطبيق مراسلة بسيط</h1>
-  <p>إذا ظهرت هذه الصفحة، فالخطوة الأولى نجحت.</p>
+
+<div class="chat">
+
+<h2>مراسلة الأصدقاء</h2>
+
+<input id="nameInput" placeholder="اسمك">
+
+<div id="messages"></div>
+
+<input id="messageInput" placeholder="اكتب رسالة">
+
+<button onclick="sendMessage()">
+إرسال
+</button>
+
+</div>
+
+<script src="app.js"></script>
+
 </body>
 </html>
