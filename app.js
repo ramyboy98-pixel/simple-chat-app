@@ -1,43 +1,68 @@
-function sendMessage(){
-
-let name=document.getElementById("nameInput").value;
-let msg=document.getElementById("messageInput").value;
-
-if(name=="" || msg==""){
-return;
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+getDatabase,
+ref,
+push,
+onChildAdded
 }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-let oldMessages=
-JSON.parse(localStorage.getItem("chat")) || [];
 
-oldMessages.push({
+const firebaseConfig = {
+
+apiKey: "ضع apiKey من Firebase",
+
+authDomain: "ضع authDomain",
+
+databaseURL: "ضع databaseURL",
+
+projectId: "ضع projectId",
+
+storageBucket: "ضع storageBucket",
+
+messagingSenderId: "ضع messagingSenderId",
+
+appId: "ضع appId"
+
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const db=getDatabase(app);
+
+const messagesRef=ref(db,"messages");
+
+
+window.sendMessage=function(){
+
+let name=
+document.getElementById("nameInput").value;
+
+let text=
+document.getElementById("messageInput").value;
+
+if(!name || !text) return;
+
+push(messagesRef,{
 name:name,
-text:msg
+text:text,
+time:Date.now()
 });
-
-localStorage.setItem(
-"chat",
-JSON.stringify(oldMessages)
-);
 
 document.getElementById(
 "messageInput"
 ).value="";
 
-loadMessages();
-}
+};
 
-function loadMessages(){
 
-let messages=
-JSON.parse(localStorage.getItem("chat")) || [];
+onChildAdded(messagesRef,(snapshot)=>{
+
+let m=snapshot.val();
 
 let box=
 document.getElementById("messages");
-
-box.innerHTML="";
-
-messages.forEach(function(m){
 
 box.innerHTML += `
 <div class="message">
@@ -46,10 +71,6 @@ box.innerHTML += `
 </div>
 `;
 
-});
-
 box.scrollTop=box.scrollHeight;
 
-}
-
-loadMessages();
+});
